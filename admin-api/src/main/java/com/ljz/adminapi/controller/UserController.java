@@ -5,10 +5,12 @@ import com.ljz.adminapi.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -29,5 +31,23 @@ public class UserController {
     @ApiOperation("获取用户信息")
     public R user(){
         return R.ok(userService.list());
+    }
+
+    @PostMapping("/refreshToken")
+    @ApiOperation("刷新token")
+    public R refreshToken(HttpServletRequest request){
+        return userService.refreshToken(request);
+    }
+
+    @GetMapping("/getInfo")
+    @ApiOperation("获取登录用户信息")
+    public R getInfo(){
+        return userService.getInfo();
+    }
+
+    @GetMapping("/getMenuList")
+    @ApiOperation("获取登录用户所拥有的菜单信息")
+    public R getMenuList() {
+        return userService.getMenuList();
     }
 }
