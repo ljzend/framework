@@ -1,5 +1,6 @@
 package com.ljz.adminapi.config;
 
+import com.ljz.adminapi.config.filter.CheckTokenFilter;
 import com.ljz.adminapi.config.handler.AnonymousAuthenticationHandler;
 import com.ljz.adminapi.config.handler.CustomerAccessDeniedHandler;
 import com.ljz.adminapi.config.handler.LoginFailureHandler;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -33,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/webjars/**",
             "/v2/**",
-            "/api/**"
+            "/api/**",
+            "/favicon.ico"
     };
     @Resource
     private CustomerUserDetailsService customerUserDetailsService;
@@ -45,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AnonymousAuthenticationHandler anonymousAuthenticationHandler;
     @Resource
     private CustomerAccessDeniedHandler customerAccessDeniedHandler;
+    @Resource
+    private CheckTokenFilter checkTokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -53,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 添加过滤器
+        http.addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //登录前进行过滤
         http.formLogin()
                 //　设置登录验证成功或失败后的的跳转地址

@@ -28,6 +28,9 @@ spring:
     port: 6379
     database: 0
     password: ljzyou2513
+    # 自定义属性
+    # 过期时间
+    expire: 60000
 
   mvc:
     pathmatch:
@@ -41,11 +44,17 @@ mybatis-plus:
       logic-delete-value: 1 # 删除
       logic-not-delete-value: 0 # 未删除
 
-#jwt配置
+# 自定义属性
+# jwt配置
 jwt:
   #密 钥
   secret: djakjdkawienf
   #过期时间(30分钟)
   expiration: 1800000
+
+# 自定义属性
+# 登录路径
+login:
+  url: /api/user/login
 
 
