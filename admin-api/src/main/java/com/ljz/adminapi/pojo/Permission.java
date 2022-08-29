@@ -3,7 +3,11 @@ package com.ljz.adminapi.pojo;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,6 +25,7 @@ import lombok.Setter;
 @Setter
 @TableName("sys_permission")
 @ApiModel(value = "Permission对象", description = "")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Permission implements Serializable {
     private static final long serialVersionUID= 1L;
 
@@ -84,6 +89,19 @@ public class Permission implements Serializable {
     @TableField("is_delete")
     @TableLogic
     private Integer isDelete;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ApiModelProperty("子菜单列表")
+    @TableField(exist = false)
+    private List<Permission> children = new ArrayList<>();
+
+    @ApiModelProperty("用于前端判断是菜单、目录或按钮")
+    @TableField(exist = false)
+    private String value;
+
+    @ApiModelProperty("是否展开")
+    @TableField(exist = false)
+    private Boolean open ;
 
 
 }

@@ -1,6 +1,7 @@
 package com.ljz.adminapi.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @Setter
 @TableName("sys_department")
 @ApiModel(value = "Department对象", description = "")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Department implements Serializable {
     private static final long serialVersionUID= 1L;
 

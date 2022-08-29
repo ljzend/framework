@@ -1,6 +1,7 @@
 package com.ljz.adminapi.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import java.util.Date;
 @Setter
 @TableName("sys_role")
 @ApiModel(value = "Role对象", description = "")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 

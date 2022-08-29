@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -26,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @TableName("sys_user")
 @ApiModel(value = "User对象", description = "")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable, UserDetails {
     private static final long serialVersionUID= 1L;
 
