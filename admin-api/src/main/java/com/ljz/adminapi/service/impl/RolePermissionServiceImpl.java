@@ -1,10 +1,13 @@
 package com.ljz.adminapi.service.impl;
 
-import com.ljz.adminapi.pojo.RolePermission;
-import com.ljz.adminapi.mapper.RolePermissionMapper;
-import com.ljz.adminapi.service.RolePermissionService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ljz.adminapi.mapper.RolePermissionMapper;
+import com.ljz.adminapi.pojo.RolePermission;
+import com.ljz.adminapi.service.RolePermissionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -17,4 +20,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermission> implements RolePermissionService {
 
+    /**
+     * 根据角色id删除角色对应的权限
+     * @param roleId 角色id
+     * @return boolean
+     */
+    @Override
+    @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public boolean deleteRolePermissionByRoleId(Long roleId) {
+        LambdaQueryWrapper<RolePermission> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RolePermission::getRoleId, roleId);
+        return remove(wrapper);
+    }
 }

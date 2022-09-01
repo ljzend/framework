@@ -46,5 +46,12 @@
         WHERE u.id = #{userId}
         ORDER BY p.id
     </select>
+    <select id="findPermissionListByRoleId" resultType="com.ljz.adminapi.pojo.Permission"
+            parameterType="java.lang.Long">
+        SELECT p.*
+        FROM sys_permission p
+                 LEFT JOIN sys_role_permission rp ON p.id = rp.permission_Id
+            WHERE rp.role_Id = #{roleId}
+    </select>
 
 </mapper>

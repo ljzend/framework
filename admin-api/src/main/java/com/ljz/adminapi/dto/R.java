@@ -22,7 +22,7 @@ public class R<T> {
     @ApiModelProperty("响应状态码")
     private Integer code;
     @ApiModelProperty("响应消息")
-    private String msg;
+    private String message;
     @ApiModelProperty("返回数据")
     private T data;
     @ApiModelProperty("时间戳")
@@ -38,10 +38,10 @@ public class R<T> {
      * @return R
      */
     public static <T> R<T> ok() {
-        R<T> R = new R<T>();
+        R<T> R = new R<>();
         R.setSuccess(true);
         R.setCode(ResultCode.SUCCESS.getCode());
-        R.setMsg(ResultCode.SUCCESS.getMessage());
+        R.setMessage(ResultCode.SUCCESS.getMessage());
         return R;
     }
 
@@ -56,7 +56,7 @@ public class R<T> {
         R<T> R = new R<T>();
         R.setSuccess(true);
         R.setCode(ResultCode.SUCCESS.getCode());
-        R.setMsg(ResultCode.SUCCESS.getMessage());
+        R.setMessage(ResultCode.SUCCESS.getMessage());
         R.setData(data);
         return R;
     }
@@ -67,10 +67,10 @@ public class R<T> {
      * @return R
      */
     public static <T> R<T> error() {
-        R<T> R = new R<T>();
+        R<T> R = new R<>();
         R.setSuccess(false);
         R.setCode(ResultCode.ERROR.getCode());
-        R.setMsg(ResultCode.ERROR.getMessage());
+        R.setMessage(ResultCode.ERROR.getMessage());
         return R;
     }
 
@@ -103,20 +103,20 @@ public class R<T> {
      * @return R
      */
     public R<T> message(String message) {
-        this.setMsg(message);
+        this.setMessage(message);
         return this;
     }
 
     /**
      * 是否存在
-     *
      * @return R
      */
-    public static <T> R<T> exist() {
-        R<T> R = new R<>();
-        R.setSuccess(true);
-        R.setCode(ResultCode.SUCCESS.getCode());
-        R.setMsg(ResultCode.SUCCESS.getMessage());
-        return R;
+    public static<T> R<T> exist(){
+        R<T> result = new R<>();
+        result.setSuccess(false);//存在该数据
+        //由于vue-element-admin模板在响应时验证状态码是否是200，如果不是200，则报错
+        result.setCode(ResultCode.SUCCESS.getCode());//执行成功，但存在该数据
+        result.setMessage("该数据存在");
+        return result;
     }
 }

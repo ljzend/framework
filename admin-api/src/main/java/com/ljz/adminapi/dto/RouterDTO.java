@@ -1,5 +1,6 @@
 package com.ljz.adminapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,9 @@ public class RouterDTO {
     private String name;
     @ApiModelProperty("路由meta信息")
     private Meta meta;
+    @ApiModelProperty("路由在面包屑导航中是否可被点击")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String redirect;
 
     @Data
     @AllArgsConstructor

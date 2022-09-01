@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -58,5 +60,12 @@ public class Department implements Serializable {
     @TableLogic
     private Integer isDelete;
 
+    @ApiModelProperty("是否展开")
+    @TableField(exist = false)
+    private Boolean open;
+
+    @ApiModelProperty("子部门")
+    @TableField(exist = false)
+    private List<Department> children = new ArrayList<>();
 
 }

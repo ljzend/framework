@@ -14,4 +14,11 @@ public interface SystemConstant {
          */
         String LOGIN_TOKEN_PREFIX = "user:login:token_";
     }
+
+    interface OOS {
+        /**
+         * 默认头像
+         */
+        String DEFAULT_AVATAR = "https://manong-authority.oss-cn-guangzhou.aliyuncs.com/avatar/male.jpg";
+    }
 }

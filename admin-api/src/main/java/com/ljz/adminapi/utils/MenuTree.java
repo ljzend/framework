@@ -33,26 +33,27 @@ public class MenuTree {
                 .stream().filter(item -> item != null && Objects.equals(item.getParentId(), pid))
                 .forEach(item -> {
                     //创建路由对象
-                    RouterDTO router = new RouterDTO();
-                    router.setName(item.getName());//路由名称
-                    router.setPath(item.getPath());//路由地址
+                    RouterDTO routerDTO = new RouterDTO();
+                    routerDTO.setName(item.getName());//路由名称
+                    routerDTO.setPath(item.getPath());//路由地址
                     //判断是否是一级菜单
                     if (item.getParentId() == 0L) {
-                        router.setComponent("Layout");//一级菜单组件
-                        router.setAlwaysShow(true);//显示路由
+                        routerDTO.setComponent("Layout");//一级菜单组件
+                        routerDTO.setAlwaysShow(true);//显示路由
+                        routerDTO.setRedirect("/");
                     } else {
-                        router.setComponent(item.getUrl());//具体的组件
-                        router.setAlwaysShow(false);//折叠路由
+                        routerDTO.setComponent(item.getUrl());//具体的组件
+                        routerDTO.setAlwaysShow(false);//折叠路由
                     }
                     //设置meta信息
-                    router.setMeta(router.new Meta(item.getLabel(),
+                    routerDTO.setMeta(routerDTO.new Meta(item.getLabel(),
                             item.getIcon(),
                             item.getCode().split(",")));
                     //递归生成路由
                     List<RouterDTO> children = makeRouter(meuList, item.getId());
-                    router.setChildren(children);//设置子路由到路由对象中
+                    routerDTO.setChildren(children);//设置子路由到路由对象中
                     //将路由信息添加到集合中
-                    routerList.add(router);
+                    routerList.add(routerDTO);
                 });
         return routerList;
     }

@@ -1,7 +1,7 @@
 package com.ljz.adminapi.mapper;
 
-import com.ljz.adminapi.pojo.Permission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ljz.adminapi.pojo.Permission;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +22,11 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @return List<Permission>
      */
     List<Permission> findPermissionListByUserId(Long userId);
+
+    /**
+     * 根据角色ID查询权限列表
+     * @param roleId 角色id
+     * @return List<Permission>
+     */
+    List<Permission> findPermissionListByRoleId(Long roleId);
 }
