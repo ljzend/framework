@@ -18,6 +18,7 @@
           type="success"
           icon="el-icon-plus"
           @click="openAddWindow"
+          :disabled="!hasPermission('sys:role:add')"
         >新增</el-button>
       </el-form-item>
     </el-form>
@@ -44,6 +45,7 @@
             type="primary"
             size="small"
             @click="handleEdit(scope.row)"
+            :disabled="!hasPermission('sys:role:edit')"
           >编辑
           </el-button
           >
@@ -52,6 +54,7 @@
             type="danger"
             size="small"
             @click="handleDelete(scope.row)"
+            :disabled="!hasPermission('sys:role:delete')"
           >删除
           </el-button
           >
@@ -60,6 +63,7 @@
             type="primary"
             size="small"
             @click="assignRole(scope.row)"
+            :disabled="!hasPermission('sys:user:assign')"
           >分配权限
           </el-button
           >
@@ -195,39 +199,43 @@ export default {
      * 分配权限
      */
     async assignRole(row) {
-      //设置角色ID
-      this.roleId = row.id
-      //构建参数
-      let params = {
-        roleId: row.id,
-        userId: this.$store.getters.userId
+      if(this.hasPermission('sys:user:assign')) {
+        //设置角色ID
+        this.roleId = row.id
+        //构建参数
+        let params = {
+          roleId: row.id,
+          userId: this.$store.getters.userId
+        }
+        //发送查询请求
+        let res = await roleApi.getAssignTreeApi(params)
+        //判断是否成功
+        if (res.success) {
+          //获取当前登录用户拥有的所有权限
+          let permissionList = res.data.permissionList
+          //获取当前被分配的角色已经拥有的权限信息
+          let checkList = res.data.checkList
+          //判断当前菜单是否是末级
+          let { setLeaf } = leafUtils()
+          //设置权限菜单列表
+          let newPermissionList = setLeaf(permissionList)
+          //设置树节点菜单数据
+          this.assignTreeData = newPermissionList
+          //将回调延迟到下次DOM更新循环之后执行,在修改数据之后立即使用它,然后等待DOM更新。
+          this.$nextTick(() => {
+            //获取树菜单的节点数据
+            let nodes = this.$refs.assignTree.children
+            //设置子节点
+            this.setChild(nodes, checkList)
+          })
+        }
+        //显示窗口
+        this.assignDialog.visible = true
+        //设置窗口标题
+        this.assignDialog.title = `给【${row.roleName}】分配权限`
+      }else{
+        this.$message.warning("没有操作权限,请联系管理员")
       }
-      //发送查询请求
-      let res = await roleApi.getAssignTreeApi(params)
-      //判断是否成功
-      if (res.success) {
-        //获取当前登录用户拥有的所有权限
-        let permissionList = res.data.permissionList
-        //获取当前被分配的角色已经拥有的权限信息
-        let checkList = res.data.checkList
-        //判断当前菜单是否是末级
-        let { setLeaf } = leafUtils()
-        //设置权限菜单列表
-        let newPermissionList = setLeaf(permissionList)
-        //设置树节点菜单数据
-        this.assignTreeData = newPermissionList
-        //将回调延迟到下次DOM更新循环之后执行,在修改数据之后立即使用它,然后等待DOM更新。
-        this.$nextTick(() => {
-          //获取树菜单的节点数据
-          let nodes = this.$refs.assignTree.children
-          //设置子节点
-          this.setChild(nodes, checkList)
-        })
-      }
-      //显示窗口
-      this.assignDialog.visible = true
-      //设置窗口标题
-      this.assignDialog.title = `给【${row.roleName}】分配权限`
     },
     /**
      * 设置子节点

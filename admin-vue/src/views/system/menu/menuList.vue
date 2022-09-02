@@ -17,6 +17,7 @@
           type="success"
           icon="el-icon-plus"
           @click="openAddWindow"
+          :disabled="!hasPermission('sys:menu:add')"
         >新增</el-button>
       </el-form-item>
     </el-form>
@@ -49,9 +50,9 @@
           <svg-icon v-else :icon-class="scope.row.icon"></svg-icon>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="路由名称" min-width="50px" align="center"></el-table-column>
-      <el-table-column prop="path" label="路由地址" min-width="100px" align="center"></el-table-column>
-      <el-table-column prop="url" label="组件路径" min-width="100px" align="center"></el-table-column>
+      <el-table-column prop="name" label="路由名称" min-width="50px" align="center"/>
+      <el-table-column prop="path" label="路由地址" min-width="100px" align="center"/>
+      <el-table-column prop="url" label="组件路径" min-width="100px" align="center"/>
       <el-table-column align="center" label="操作" min-width="100px">
         <template slot-scope="scope">
           <el-button
@@ -59,6 +60,7 @@
             icon="el-icon-edit"
             size="small"
             @click="editMenu(scope.row)"
+            :disabled="!hasPermission('sys:menu:edit')"
           >编辑
           </el-button
           >
@@ -67,6 +69,7 @@
             size="small"
             icon="el-icon-delete"
             @click="deleteMenu(scope.row)"
+            :disabled="!hasPermission('sys:menu:delete')"
           >删除
           </el-button
           >

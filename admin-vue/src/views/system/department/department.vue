@@ -17,6 +17,7 @@
           type="success"
           icon="el-icon-plus"
           @click="openAddWindow"
+          :disabled="!hasPermission('sys:department:add')"
         >新增</el-button>
       </el-form-item>
     </el-form>
@@ -40,6 +41,7 @@
             type="primary"
             size="small"
             @click="handleEdit(scope.$index, scope.row)"
+            :disabled="!hasPermission('sys:department:edit')"
           >编辑
           </el-button>
           <el-button
@@ -47,6 +49,7 @@
             type="danger"
             size="small"
             @click="handleDelete(scope.$index, scope.row)"
+            :disabled="!hasPermission('sys:department:delete')"
           >删除
           </el-button>
         </template>

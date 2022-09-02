@@ -74,6 +74,7 @@
             size="small"
             type="success"
             @click="openAddWindow()"
+            :disabled="!hasPermission('sys:user:add')"
           >
             新增
           </el-button>
@@ -104,6 +105,7 @@
               type="primary"
               size="mini"
               @click="handleEdit(scope.row)"
+              :disabled="!hasPermission('sys:user:edit')"
             >编辑
             </el-button>
             <el-button
@@ -111,6 +113,7 @@
               type="danger"
               size="mini"
               @click="handleDelete(scope.row)"
+              :disabled="!hasPermission('sys:user:delete')"
             >删除
             </el-button>
             <el-button
@@ -118,6 +121,7 @@
               type="primary"
               size="mini"
               @click="assignRole(scope.row)"
+              :disabled="!hasPermission('sys:user:assign')"
             >分配角色
             </el-button>
           </template>
@@ -285,7 +289,15 @@
 //导入部门api脚本
 import departmentApi from '@/api/department'
 //导入用户api脚本
-import { getUserList, addUser, updateUser, deleteUser, getAssignRoleList, getRoleIdByUserId, assignRoleSave } from '@/api/user'
+import {
+  getUserList,
+  addUser,
+  updateUser,
+  deleteUser,
+  getAssignRoleList,
+  getRoleIdByUserId,
+  assignRoleSave
+} from '@/api/user'
 //导入对话框组件
 import SystemDialog from '@/components/system/SystemDialog.vue'
 //导入token
@@ -402,35 +414,39 @@ export default {
      * 打开分配角色
      */
     async assignRole(row) {
-      //防止回显出现问题
-      this.selectedIds = []
-      this.selectedUserId = ''
-      //被分配用户的id
-      this.selectedUserId = row.id
-      //显示窗口
-      this.assignDialog.visible = true
-      //设置标题
-      this.assignDialog.title = `给【${row.realName}】分配角色`
-      //查询当前登录用户的所有角色信息
-      await this.getAssignRoleList()
-      //获取当前被分配用户的ID
-      let params = {
-        userId: row.id
-      }
-      //发送根据用户ID查询角色列表的请求
-      let res = await getRoleIdByUserId(params)
-      //如果存在数据
-      if (res.success && res.data) {
-        //将查询到的角色ID列表交给选中角色数组
-        this.selectedIds = res.data
-        //循环遍历
-        this.selectedIds.forEach((key) => {
-          this.assignRoleList.forEach((item) => {
-            if (item.id === key) {
-              this.$refs.assignRoleTable.toggleRowSelection(item, true)
-            }
+      if (this.hasPermission('sys:user:assign')) {
+        //防止回显出现问题
+        this.selectedIds = []
+        this.selectedUserId = ''
+        //被分配用户的id
+        this.selectedUserId = row.id
+        //显示窗口
+        this.assignDialog.visible = true
+        //设置标题
+        this.assignDialog.title = `给【${row.realName}】分配角色`
+        //查询当前登录用户的所有角色信息
+        await this.getAssignRoleList()
+        //获取当前被分配用户的ID
+        let params = {
+          userId: row.id
+        }
+        //发送根据用户ID查询角色列表的请求
+        let res = await getRoleIdByUserId(params)
+        //如果存在数据
+        if (res.success && res.data) {
+          //将查询到的角色ID列表交给选中角色数组
+          this.selectedIds = res.data
+          //循环遍历
+          this.selectedIds.forEach((key) => {
+            this.assignRoleList.forEach((item) => {
+              if (item.id === key) {
+                this.$refs.assignRoleTable.toggleRowSelection(item, true)
+              }
+            })
           })
-        })
+        }
+      }else{
+        this.$message.warning("没有操作权限,请联系管理员")
       }
     },
     /**
@@ -461,25 +477,25 @@ export default {
     /**
      * 分配角色确认事件
      */
-    async onAssignConfirm(){
+    async onAssignConfirm() {
       //判断用户是否有选中角色
       if (this.selectedIds.length === 0) {
-        this.$message.warning("请选择要分配的角色！");
-        return;
+        this.$message.warning('请选择要分配的角色！')
+        return
       }
       let params = {
         userId: this.selectedUserId,
-        roleIds: this.selectedIds,
-      };
+        roleIds: this.selectedIds
+      }
       //发送请求
-      let res = await assignRoleSave(params);
+      let res = await assignRoleSave(params)
       //判断是否成功
       if (res.success) {
-        this.$message.success(res.message);
+        this.$message.success(res.message)
         //关闭窗口
-        this.assignDialog.visible = false;
+        this.assignDialog.visible = false
       } else {
-        this.$message.error(res.message);
+        this.$message.error(res.message)
       }
     },
     /**
@@ -514,21 +530,21 @@ export default {
      * 编辑用户
      */
     handleEdit(row) {
-      if(this.hasPermission('sys:user:edit')) {
+      if (this.hasPermission('sys:user:edit')) {
         //设置弹框属性
         this.userDialog.title = '编辑用户'
         this.userDialog.visible = true
         //把当前编辑的数据复制到表单数据域，供回显使用
         this.$objCopy(row, this.user)
-      }else{
-        this.$message.warning("没有操作权限,请联系管理员")
+      } else {
+        this.$message.warning('没有操作权限,请联系管理员')
       }
     },
     /**
      * 删除
      */
     async handleDelete(row) {
-      if(this.hasPermission('sys:user:delete')) {
+      if (this.hasPermission('sys:user:delete')) {
         let confirm = await this.$myconfirm('确定要删除该数据吗?')
         if (confirm) {
           //封装条件
@@ -544,8 +560,8 @@ export default {
             this.$message.error(res.message)
           }
         }
-      }else{
-        this.$message.warning("没有操作权限,请联系管理员")
+      } else {
+        this.$message.warning('没有操作权限,请联系管理员')
       }
     },
     /**
@@ -582,7 +598,7 @@ export default {
      * 当每页数量发生变化时触发该事件
      */
     handleSizeChange(val) {
-      const {page, limit} = val
+      const { page, limit } = val
       this.pageSize = limit
       this.search(this.departmentId, page, limit)
     },
@@ -590,7 +606,7 @@ export default {
      * 当页码发生变化时触发该事件
      */
     handleCurrentChange(val) {
-      const {page, limit} = val
+      const { page, limit } = val
       this.pageNo = page
       this.search(this.departmentId, page, limit)
     },
@@ -622,12 +638,12 @@ export default {
      * 打开添加窗口
      */
     openAddWindow() {
-      if(this.hasPermission('sys:user:add')){
+      if (this.hasPermission('sys:user:add')) {
         this.$resetForm('userForm', this.user) //清空表单
         this.userDialog.visible = true //显示窗口
         this.userDialog.title = '新增用户' //设置标题
-      }else{
-        this.$message.warning("没有操作权限,请联系管理员")
+      } else {
+        this.$message.warning('没有操作权限,请联系管理员')
       }
     },
     /**
@@ -743,7 +759,7 @@ export default {
       //表格高度
       this.tableHeight = window.innerHeight - 220
       //角色表格高度
-      this.assignHeight = window.innerHeight - 350;
+      this.assignHeight = window.innerHeight - 350
     })
   }
 
@@ -779,7 +795,7 @@ export default {
   display: block;
 }
 
-.pagination-container{
+.pagination-container {
   margin: 0;
   padding: 0 !important;
   text-align: center;
