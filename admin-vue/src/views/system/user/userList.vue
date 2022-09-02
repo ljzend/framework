@@ -47,13 +47,13 @@
         size="small"
       >
         <el-form-item>
-          <el-input v-model="searchModel.username" placeholder="请输入用户名"/>
+          <el-input v-model.trim="searchModel.username" placeholder="请输入用户名"/>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="searchModel.realName" placeholder="请输入真实姓名"/>
+          <el-input v-model.trim="searchModel.realName" placeholder="请输入真实姓名"/>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="searchModel.phone" placeholder="请输入电话"/>
+          <el-input v-model.trim="searchModel.phone" placeholder="请输入电话"/>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -152,32 +152,32 @@
             size="small"
           >
             <el-form-item prop="username" label="用户名">
-              <el-input v-model="user.username"/>
+              <el-input v-model.trim="user.username"/>
             </el-form-item>
             <el-form-item prop="password" v-if="user.id === ''" label="密码">
-              <el-input type="password" v-model="user.password"/>
+              <el-input type="password" v-model.trim="user.password"/>
             </el-form-item>
             <el-form-item prop="departmentName" label="所属部门">
               <el-input
-                v-model="user.departmentName"
+                v-model.trim="user.departmentName"
                 :readonly="true"
                 @click.native="selectDepartment()"
               />
             </el-form-item>
             <el-form-item prop="realName" label="姓名">
-              <el-input v-model="user.realName"/>
+              <el-input v-model.trim="user.realName"/>
             </el-form-item>
             <el-form-item prop="phone" label="电话">
-              <el-input v-model="user.phone"/>
+              <el-input v-model.trim="user.phone"/>
             </el-form-item>
             <el-form-item label="昵称">
-              <el-input v-model="user.nickName"/>
+              <el-input v-model.trim="user.nickName"/>
             </el-form-item>
             <el-form-item label="邮箱">
-              <el-input v-model="user.email"/>
+              <el-input v-model.trim="user.email"/>
             </el-form-item>
             <el-form-item prop="gender" label="性别">
-              <el-radio-group v-model="user.gender">
+              <el-radio-group v-model.trim="user.gender">
                 <el-radio :label="0">男</el-radio>
                 <el-radio :label="1">女</el-radio>
               </el-radio-group>

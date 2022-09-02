@@ -8,7 +8,7 @@
       size="small"
     >
       <el-form-item>
-        <el-input v-model="searchModel.departmentName" placeholder="请输入部门名称"></el-input>
+        <el-input v-model.trim="searchModel.departmentName" placeholder="请输入部门名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
@@ -72,22 +72,22 @@
         >
           <el-form-item label="所属部门" prop="parentName">
             <el-input
-              v-model="dept.parentName"
+              v-model.trim="dept.parentName"
               @click.native="selectDepartment()"
               :readonly="true"
             ></el-input>
           </el-form-item>
           <el-form-item label="部门名称" prop="departmentName">
-            <el-input v-model="dept.departmentName"></el-input>
+            <el-input v-model.trim="dept.departmentName"></el-input>
           </el-form-item>
           <el-form-item label="部门电话">
-            <el-input v-model="dept.phone"></el-input>
+            <el-input v-model.trim="dept.phone"></el-input>
           </el-form-item>
           <el-form-item label="部门地址">
-            <el-input v-model="dept.address"></el-input>
+            <el-input v-model.trim="dept.address"></el-input>
           </el-form-item>
           <el-form-item label="序号">
-            <el-input v-model="dept.orderNum"></el-input>
+            <el-input v-model.trim="dept.orderNum"></el-input>
           </el-form-item>
         </el-form>
       </div>

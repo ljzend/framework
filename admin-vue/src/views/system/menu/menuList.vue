@@ -8,7 +8,7 @@
       size="small"
     >
       <el-form-item>
-        <el-input v-model="searchModel.label" placeholder="请输入菜单名称"></el-input>
+        <el-input v-model.trim="searchModel.label" placeholder="请输入菜单名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
@@ -95,7 +95,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item prop="type" label="菜单类型">
-                <el-radio-group v-model="menu.type">
+                <el-radio-group v-model.trim="menu.type">
                   <el-radio :label="0">目录</el-radio>
                   <el-radio :label="1">菜单</el-radio>
                   <el-radio :label="2">按钮</el-radio>
@@ -106,12 +106,12 @@
           <el-form-item prop="parentName" size="small" label="所属菜单">
             <el-input
               @click.native="selectParentMenu"
-              v-model="menu.parentName"
+              v-model.trim="menu.parentName"
               :readonly="true"
             ></el-input>
           </el-form-item>
           <el-form-item prop="label" size="small" label="菜单名称">
-            <el-input v-model="menu.label"></el-input>
+            <el-input v-model.trim="menu.label"></el-input>
           </el-form-item>
           <el-form-item size="small" label="菜单图标">
             <my-icon @selecticon="setIcon" ref="child"></my-icon>
@@ -122,7 +122,7 @@
             size="small"
             label="路由名称"
           >
-            <el-input v-model="menu.name"></el-input>
+            <el-input v-model.trim="menu.name"></el-input>
           </el-form-item>
           <el-form-item
             prop="path"
@@ -130,7 +130,7 @@
             size="small"
             label="路由地址"
           >
-            <el-input v-model="menu.path"></el-input>
+            <el-input v-model.trim="menu.path"></el-input>
           </el-form-item>
           <el-form-item
             prop="url"
@@ -138,13 +138,13 @@
             size="small"
             label="组件路径"
           >
-            <el-input v-model="menu.url"></el-input>
+            <el-input v-model.trim="menu.url"></el-input>
           </el-form-item>
           <el-form-item prop="code" size="small" label="权限字段">
-            <el-input v-model="menu.code"></el-input>
+            <el-input v-model.trim="menu.code"></el-input>
           </el-form-item>
           <el-form-item size="small" label="菜单序号">
-            <el-input v-model="menu.orderNum"></el-input>
+            <el-input v-model.trim="menu.orderNum"></el-input>
           </el-form-item>
         </el-form>
       </div>

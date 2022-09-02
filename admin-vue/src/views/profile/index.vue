@@ -9,7 +9,7 @@
 
         <el-col :span="18" :xs="24">
           <el-card>
-            <el-tabs v-model="activeTab">
+            <el-tabs v-model.trim="activeTab">
               <el-tab-pane label="Activity" name="activity">
                 <activity />
               </el-tab-pane>

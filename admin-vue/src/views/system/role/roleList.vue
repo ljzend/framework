@@ -9,7 +9,7 @@
       size="small"
     >
       <el-form-item>
-        <el-input v-model="searchModel.roleName" placeholder="请输入角色名称"/>
+        <el-input v-model.trim="searchModel.roleName" placeholder="请输入角色名称"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search(pageNo, pageSize)">查询</el-button>
@@ -93,13 +93,13 @@
           size="small"
         >
           <el-form-item label="角色编码" prop="roleCode">
-            <el-input v-model="role.roleCode"></el-input>
+            <el-input v-model.trim="role.roleCode"></el-input>
           </el-form-item>
           <el-form-item label="角色名称" prop="roleName">
-            <el-input v-model="role.roleName"></el-input>
+            <el-input v-model.trim="role.roleName"></el-input>
           </el-form-item>
           <el-form-item label="角色描述">
-            <el-input type="textarea" v-model="role.remark" :rows="5"></el-input>
+            <el-input type="textarea" v-model.trim="role.remark" :rows="5"></el-input>
           </el-form-item>
         </el-form>
       </div>

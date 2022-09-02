@@ -8,7 +8,7 @@
       </div>
       <div class="box-item">
         <span class="field-label">Change Theme : </span>
-        <el-switch v-model="theme" />
+        <el-switch v-model.trim="theme" />
         <aside style="margin-top:15px;">
           Tips: It is different from the theme-pick on the navbar is two different skinning methods, each with different application scenarios. Refer to the documentation for details.
         </aside>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="block">
-      <el-radio-group v-model="radio">
+      <el-radio-group v-model.trim="radio">
         <el-radio :label="3">
           Option A
         </el-radio>
@@ -67,7 +67,7 @@
     </div>
 
     <div class="block">
-      <el-slider v-model="slideValue" />
+      <el-slider v-model.trim="slideValue" />
     </div>
   </div>
 </template>
