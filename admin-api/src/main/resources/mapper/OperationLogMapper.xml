@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljz.adminapi.mapper.OperationLogMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ljz.adminapi.pojo.OperationLog">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="operation_name" property="operationName"/>
+        <result column="request_uri" property="requestUri"/>
+        <result column="method_type" property="methodType"/>
+        <result column="request_param" property="requestParam"/>
+        <result column="method_name" property="methodName"/>
+        <result column="code" property="code"/>
+        <result column="response_param" property="responseParam"/>
+        <result column="exception_msg" property="exceptionMsg"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_name, operation_name, request_uri, method_type, request_param, method_name, `code`, response_param, exception_msg, create_time
+    </sql>
+</mapper>

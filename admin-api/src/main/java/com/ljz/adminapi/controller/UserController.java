@@ -2,6 +2,7 @@ package com.ljz.adminapi.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ljz.adminapi.config.annotation.Log;
 import com.ljz.adminapi.dto.R;
 import com.ljz.adminapi.pojo.Role;
 import com.ljz.adminapi.pojo.User;
@@ -43,44 +44,37 @@ public class UserController {
     @Resource
     private RoleService roleService;
 
-    @GetMapping("")
-    @ApiOperation("获取用户信息")
-    public R user() {
-        return R.ok(userService.list());
-    }
-
     @PostMapping("/refreshToken")
     @ApiOperation("刷新token")
+    @Log("刷新token")
     public R refreshToken(HttpServletRequest request) {
         return userService.refreshToken(request);
     }
 
     @GetMapping("/getInfo")
     @ApiOperation("获取登录用户信息")
+    @Log(value = "获取登录用户信息", save = false)
     public R getInfo() {
         return userService.getInfo();
     }
 
     @GetMapping("/getMenuList")
     @ApiOperation("获取登录用户所拥有的菜单信息")
+    @Log(value = "获取登录用户所拥有的菜单信息", save = false)
     public R getMenuList() {
         return userService.getMenuList();
     }
 
     @PostMapping("/logout")
     @ApiOperation("退出登录")
+    @Log("退出登录")
     public R logout(HttpServletRequest request, HttpServletResponse response) {
         return userService.logout(request, response);
     }
 
-    /**
-     * 查询用户列表
-     *
-     * @param userQueryVo 查询条件
-     * @return R
-     */
     @GetMapping("/list")
     @ApiOperation("查询用户列表")
+    @Log(value = "查询用户列表", save = false)
     public R list(UserQueryVo userQueryVo) {
         //创建分页信息
         IPage<User> page = new Page<>(userQueryVo.getPageNo(), userQueryVo.getPageSize());
@@ -92,6 +86,7 @@ public class UserController {
 
     @PostMapping("/add")
     @ApiOperation("添加用户")
+    @Log("添加用户")
     @PreAuthorize("hasAuthority('sys:user:add')")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R add(@RequestBody User user) {
@@ -112,6 +107,7 @@ public class UserController {
 
     @PutMapping("/update")
     @ApiOperation("更新用户信息")
+    @Log("更新用户信息")
     @PreAuthorize("hasAuthority('sys:user:edit')")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R update(@RequestBody User user) {
@@ -130,6 +126,7 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除用户")
+    @Log("删除用户")
     @PreAuthorize("hasAuthority('sys:user:delete')")
     public R delete(@PathVariable Long id) {
         //调用删除用户信息的方法
@@ -141,6 +138,7 @@ public class UserController {
 
     @GetMapping("/getRoleListForAssign")
     @ApiOperation("获取分配角色列表")
+    @Log("获取分配角色列表")
     @PreAuthorize("hasAuthority('sys:user:assign')")
     public R getRoleListForAssign(RoleQueryVo roleQueryVo) {
         //创建分页对象
@@ -151,14 +149,10 @@ public class UserController {
         return R.ok(page);
     }
 
-    /**
-     * 根据用户ID查询该用户拥有的角色列表
-     *
-     * @param userId 用户id
-     * @return R
-     */
+
     @GetMapping("/getRoleByUserId/{userId}")
     @ApiOperation("根据用户ID查询该用户拥有的角色列表")
+    @Log("根据用户ID查询该用户拥有的角色列表")
     @PreAuthorize("hasAuthority('sys:user:assign')")
     public R getRoleByUserId(@PathVariable Long userId) {
         //调用根据用户ID查询该用户拥有的角色ID的方法
@@ -166,14 +160,9 @@ public class UserController {
         return R.ok(roleIds);
     }
 
-    /**
-     * 分配角色
-     *
-     * @param userRoleVo 查询条件
-     * @return R
-     */
     @PostMapping("/saveUserRole")
     @ApiOperation("分配角色")
+    @Log("分配角色")
     @PreAuthorize("hasAuthority('sys:user:assign')")
     public R saveUserRole(@RequestBody UserRoleVo userRoleVo) {
         if (userService.saveUserRole(userRoleVo.getUserId(), userRoleVo.getRoleIds())) {

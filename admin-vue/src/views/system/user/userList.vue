@@ -332,7 +332,7 @@ export default {
       },
       //查询条件对象
       searchModel: {
-        username: '',
+        userame: '',
         realName: '',
         phone: '',
         departmentId: '',

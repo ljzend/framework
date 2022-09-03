@@ -405,7 +405,7 @@ export default {
               //成功提示
               this.$message.success(res.message);
               //刷新
-              this.search();
+              await this.search();
             } else {
               //失败提示
               this.$message.error(res.message);
@@ -441,8 +441,8 @@ export default {
       this.pageNo = page
       this.search(page, limit)
     }
-  }
-  ,
+  },
+
   created() {
     //调用查询角色列表的方法
     this.search()
