@@ -72,7 +72,7 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-hangzhou.aliyuncs.com
-      keyid: LTAI5t6mQbaiLeTLTxoAtmD8
+      keyid: 
       keysecret: 
       #bucket名称
       bucketname: ljzend
