@@ -30,6 +30,10 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     public boolean deleteRolePermissionByRoleId(Long roleId) {
         LambdaQueryWrapper<RolePermission> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(RolePermission::getRoleId, roleId);
+        // 判断该角色是否有权限
+        if(list(wrapper).size() == 0){
+            return true;
+        }
         return remove(wrapper);
     }
 }

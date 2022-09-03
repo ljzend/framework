@@ -1,5 +1,6 @@
 package com.ljz.adminapi.controller;
 
+import com.ljz.adminapi.config.annotation.Log;
 import com.ljz.adminapi.dto.R;
 import com.ljz.adminapi.pojo.Department;
 import com.ljz.adminapi.service.DepartmentService;
@@ -67,6 +68,7 @@ public class DepartmentController {
      */
     @PostMapping("/add")
     @ApiOperation("添加部门")
+    @Log(value = "添加部门")
     @PreAuthorize("hasAuthority('sys:department:add')")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R add(@RequestBody Department department) {
@@ -83,6 +85,7 @@ public class DepartmentController {
      */
     @PutMapping("/update")
     @ApiOperation("修改部门")
+    @Log(value = "修改部门")
     @PreAuthorize("hasAuthority('sys:department:edit')")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R update(@RequestBody Department department){
@@ -117,6 +120,7 @@ public class DepartmentController {
      */
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除部门")
+    @Log(value = "删除部门")
     @PreAuthorize("hasAuthority('sys:department:delete')")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R delete(@PathVariable Long id){

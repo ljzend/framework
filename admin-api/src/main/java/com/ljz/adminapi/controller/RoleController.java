@@ -2,6 +2,7 @@ package com.ljz.adminapi.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ljz.adminapi.config.annotation.Log;
 import com.ljz.adminapi.dto.R;
 import com.ljz.adminapi.dto.RolePermissionDTO;
 import com.ljz.adminapi.pojo.Role;
@@ -62,6 +63,7 @@ public class RoleController {
      */
     @PostMapping("/add")
     @ApiOperation("添加角色")
+    @Log(value = "添加角色")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R add(@RequestBody Role role) {
         if (roleService.save(role)) {
@@ -78,6 +80,7 @@ public class RoleController {
      */
     @PutMapping("/update")
     @ApiOperation("修改角色")
+    @Log(value = "修改角色")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R update(@RequestBody Role role) {
         if (roleService.updateById(role)) {
@@ -94,8 +97,10 @@ public class RoleController {
      */
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除角色")
+    @Log(value = "删除角色")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R delete(@PathVariable Long id) {
+        // TODO : 当用户没有权限时会报错
         if (roleService.removeById(id) && rolePermissionService.deleteRolePermissionByRoleId(id)) {
             return R.ok().message("角色删除成功");
         }
@@ -135,6 +140,8 @@ public class RoleController {
      * @return R
      */
     @PostMapping("/saveRoleAssign")
+    @ApiOperation("分配权限-保存权限数据")
+    @Log(value = "分配权限-保存权限数据")
     public R saveRoleAssign(@RequestBody RolePermissionVo rolePermissionVo) {
         if (roleService.saveRolePermission(rolePermissionVo.getRoleId(),
                 rolePermissionVo.getList())) {

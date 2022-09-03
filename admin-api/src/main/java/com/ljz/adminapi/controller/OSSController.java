@@ -1,8 +1,10 @@
 package com.ljz.adminapi.controller;
 
+import com.ljz.adminapi.config.annotation.Log;
 import com.ljz.adminapi.dto.R;
 import com.ljz.adminapi.service.FileService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,8 @@ public class OSSController {
      * @return R
      */
     @PostMapping("/upload")
+    @ApiOperation("文件上传")
+    @Log(value = "文件上传")
     public R upload(MultipartFile file, String module) {
         //返回上传到oss的路径
         String url = fileService.upload(file, module);

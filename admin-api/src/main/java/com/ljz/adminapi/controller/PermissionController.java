@@ -1,5 +1,6 @@
 package com.ljz.adminapi.controller;
 
+import com.ljz.adminapi.config.annotation.Log;
 import com.ljz.adminapi.dto.R;
 import com.ljz.adminapi.pojo.Permission;
 import com.ljz.adminapi.service.PermissionService;
@@ -76,6 +77,7 @@ public class PermissionController {
      */
     @PostMapping("/add")
     @ApiOperation("添加菜单")
+    @Log(value = "添加菜单")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R add(@RequestBody Permission permission) {
         if (permissionService.save(permission)) {
@@ -92,6 +94,7 @@ public class PermissionController {
      */
     @ApiOperation("修改菜单")
     @PutMapping("/update")
+    @Log(value = "修改菜单")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R update(@RequestBody Permission permission) {
         if (permissionService.updateById(permission)) {
@@ -108,6 +111,7 @@ public class PermissionController {
      */
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除菜单")
+    @Log(value = "删除菜单")
     @Transactional(propagation= Propagation.REQUIRED, rollbackFor = {Exception.class})
     public R delete(@PathVariable Long id) {
         if (permissionService.removeById(id)) {
