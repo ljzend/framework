@@ -30,7 +30,7 @@ spring:
     host: 124.71.184.123
     port: 6379
     database: 0
-    password: ljzyou2513
+    password: 
     # 自定义属性
     # 过期时间
     expire: 60000
