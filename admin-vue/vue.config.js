@@ -13,7 +13,7 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following method:
 // port = 9527 npm run dev OR npm run dev --port = 9527
-const port = process.env.port || process.env.npm_config_port || 9527 // dev port
+const port = process.env.port || process.env.npm_config_port || 80 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -40,7 +40,8 @@ module.exports = {
     //before: require('./mock/mock-server.js')
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: "http://localhost:8081/api",
+        target: "http://43.139.0.92:8081/api",
+        // target: "http://127.0.0.1:8081/api",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
